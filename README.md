@@ -1,4 +1,4 @@
-[render](earth.jpg)
+![render](earth.jpg)
 
 this was almost entirely vibe coded
 
