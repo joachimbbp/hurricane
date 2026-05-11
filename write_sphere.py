@@ -19,7 +19,7 @@ n_times, n_levels, n_lat, n_lon = water_4d.shape
 print(f"Source shape: {water_4d.shape}")
 
 # --- Define output Cartesian cube ---
-N = 128
+N = 256
 coords_1d = np.linspace(-1.0, 1.0, N)
 xx, yy, zz = np.meshgrid(coords_1d, coords_1d, coords_1d, indexing='ij')
 
@@ -57,11 +57,11 @@ cloud_sphere = np.zeros((n_output_frames, N, N, N), dtype=np.float32)
 
 for t in range(n_times):
     print(f"Resampling frame {t+1}/{n_times}...")
-
-    w = map_coordinates(water_4d[t], indices, order=1, mode='wrap', cval=0.0)
+    # claude: allegedly order 3 is cubic spline, which should be smoother
+    w = map_coordinates(water_4d[t], indices, order=3, mode='wrap', cval=0.0)
     water_sphere[t + 1] = w.reshape(N, N, N) * shell_mask
 
-    c = map_coordinates(cloud_4d[t], indices, order=1, mode='wrap', cval=0.0)
+    c = map_coordinates(cloud_4d[t], indices, order=3, mode='wrap', cval=0.0)
     cloud_sphere[t + 1] = c.reshape(N, N, N) * shell_mask
 
 print(f"Output shape: {water_sphere.shape}")
@@ -116,7 +116,7 @@ align_channel = nv.Channel(
     interpolation=nv.modes.Interpolation.direct,
 )
 
-save_config = nv.SaveConfig("harvey_global_sphere", folder=Path("harvey_global_sphere_seq"))
+save_config = nv.SaveConfig("harvey_global_sphere_cubic_up", folder=Path("harvey_global_sphere_seq_cubic_up"))
 seq = nv.Sequence([water_channel, cloud_channel, align_channel], save_config)
 seq.write()
 print("done!")
