@@ -1,3 +1,4 @@
+
 import cdsapi
 
 c = cdsapi.Client()
@@ -13,7 +14,6 @@ c.retrieve(
             'specific_cloud_ice_water_content',
             'specific_rain_water_content',
             'specific_snow_water_content',
-            'relative_humidity',
         ],
         'pressure_level': [
             '100', '125', '150', '175', '200', '225', '250',
@@ -23,12 +23,13 @@ c.retrieve(
         ],
         'year': '2017',
         'month': '08',
-        'day': '25',
-        'time': '18:00',
-        # Bounding box: [North, West, South, East]
-        # Gulf Coast crop covering Harvey at landfall
+        'day': [
+            '23', '24', '25', '26', '27', '28', '29', '30', '31'
+        ],
+        # Every 6 hours — change to list(range(24)) strings for hourly
+        'time': ['00:00', '06:00', '12:00', '18:00'],
         'area': [35, -105, 15, -80],
         'grid': [0.25, 0.25],
     },
-    'harvey_landfall.nc'
+    'harvey_timeseries.nc'
 )
