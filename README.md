@@ -1,5 +1,8 @@
+[render](earth.jpg)
+
 this was almost entirely vibe coded
 
+visualization of ECMWF weather simulation
 
 To download:
 `uv run download.py`
