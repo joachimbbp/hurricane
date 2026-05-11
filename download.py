@@ -28,8 +28,9 @@ c.retrieve(
         ],
         # Every 6 hours — change to list(range(24)) strings for hourly
         'time': ['00:00', '06:00', '12:00', '18:00'],
-        'area': [35, -105, 15, -80],
+        # commented out to include full earth
+        # 'area': [35, -105, 15, -80],
         'grid': [0.25, 0.25],
     },
-    'harvey_timeseries.nc'
+    'harvey_global.nc'
 )

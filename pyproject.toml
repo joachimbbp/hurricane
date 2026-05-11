@@ -9,5 +9,6 @@ dependencies = [
     "netcdf4>=1.7.4",
     "neurovolume>=0.1.0a19",
     "numpy>=2.4.4",
+    "scipy>=1.17.1",
     "xarray>=2026.4.0",
 ]
