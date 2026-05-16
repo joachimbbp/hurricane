@@ -99,7 +99,10 @@ align_sphere = np.zeros((n_output_frames, N, N, N), dtype=np.float32)
 stamp_marker(align_sphere[0], np_ix, np_iy, np_iz, value=1.0)   # north pole — bright
 stamp_marker(align_sphere[0], ni_ix, ni_iy, ni_iz, value=0.5)   # null island — dimmer
 
+save_config = nv.SaveConfig("harvey_global_sphere_cubic_up", folder=Path("harvey_global_sphere_seq_cubic_up"))
+
 # --- Write as neurovolume sequence ---
+
 water_channel = nv.Channel(
     "water",
     nv.prep_ndarray(water_sphere, transpose=(0, 1, 2, 3)),
@@ -116,7 +119,9 @@ align_channel = nv.Channel(
     interpolation=nv.modes.Interpolation.direct,
 )
 
-save_config = nv.SaveConfig("harvey_global_sphere_cubic_up", folder=Path("harvey_global_sphere_seq_cubic_up"))
 seq = nv.Sequence([water_channel, cloud_channel, align_channel], save_config)
 seq.write()
+
+
+
 print("done!")
